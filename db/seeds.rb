@@ -10,9 +10,9 @@
 require 'faker'
 
 
-nb_user = 500
+nb_user = 100
 nb_events = 50
-nb_guests = 1000
+nb_guests = 100
 
 
 nb_user.times do |x|
