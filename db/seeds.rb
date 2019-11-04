@@ -17,7 +17,7 @@ nb_guests = 1000
 
 nb_user.times do |x|
   User.create(
-      email: Faker::Internet.email,
+      email: Faker::Name.first_name+'@yopmail.com',
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
       description: Faker::Lorem.paragraph_by_chars(number: 200, supplemental: false))
