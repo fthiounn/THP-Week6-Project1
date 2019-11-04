@@ -24,16 +24,23 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    @user = User.new(first_name: params[:first_name], 
+                    last_name: params[:last_name],
+                    description: params[:description],
+                    email: params[:mail])
+    if params[:password] != params[:confirmpassword]
+      flash.now[:danger] = "Passwords must match !"
+      render :action => 'new' 
+    end
+    if @user.save # essaie de sauvegarder en base @gossip
+        flash[:success] = "You successfuly created your account"
+        redirect_to :controller => 'users', :action => 'index'
+    else
+      # This line overrides the default rendering behavior, which
+      # would have been to render the "create" view.
+      flash.now[:danger] = "Error with the account creation"
+      render :action => 'new'
     end
   end
 
@@ -71,4 +78,20 @@ class UsersController < ApplicationController
     def user_params
       params.fetch(:user, {})
     end
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
